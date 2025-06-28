@@ -1,0 +1,136 @@
+Example 1: Evaluate fox²y³dydx, plot the region R of integration and find the area of
+
+the region R.
+
+WxMaxima code/*
+
+f(x, y) := x^2 * y^3$
+
+/* Evaluate the double integral */
+f1: integrate(integrate(f(x, y), y, 1, 2), x, 0, 3)$
+print("The value of the given double integral is", f1)$
+
+/* Plot the region of integration: x from 0 to 3, y from 1 to 2 */
+wxdraw2d(
+  grid=true,
+  xaxis=true,
+  yaxis=true,
+  xrange=[-1, 4],
+  yrange=[0, 4],
+  color=blue,
+  fill_color=light_blue,
+  filled_polygon([[0,1], [3,1], [3,2], [0,2]])
+)$
+
+Example 3: Evaluate So Sxx(x² + y²)dydx, plot the region R of integration and find the
+
+area of the region R.
+/* Define the function */
+f(x, y) := x^2 + y^2$
+
+/* Evaluate the double integral: y from x to sqrt(x), x from 0 to 1 */
+fl: integrate(
+      integrate(f(x, y), y, x, sqrt(x)),
+    x, 0, 1)$
+
+print("The value of the double integral is:", fl)$
+
+/* Plot the region bounded by y = x and y = sqrt(x) */
+wxdraw2d(
+  grid=true,
+  xaxis=true,
+  yaxis=true,
+  xrange=[0, 1],
+  yrange=[0, 1],
+  implicit(y = x, x, 0, 1, y, 0, 1),
+  implicit(y^2 = x, x, 0, 1, y, 0, 1)
+)$
+
+/* Calculate the area of the region of integration */
+Area: integrate(
+         integrate(1, y, x, sqrt(x)),
+       x, 0, 1)$
+
+print("Area of the region of integration is:", Area)$
+
+
+Example 5: Evaluate of xy dydx by changing the order of integration and also verify the result by direct integration.
+/* Define the function */
+f(x, y) := x * y$
+
+/* Original order: integrate y from x^2 to sqrt(x), then x from 0 to 1 */
+f1: integrate(
+       integrate(f(x, y), y, x^2, sqrt(x)),
+     x, 0, 1)$
+
+print("The value of the given integral =", f1)$
+
+/* Plot the region bounded by y = x^2 and y = sqrt(x) */
+wxdraw2d(
+  grid=true,
+  xaxis=true,
+  yaxis=true,
+  xrange=[0, 1],
+  yrange=[0, 1],
+  color=blue,
+  implicit(y = x^2, x, 0, 1, y, 0, 1),
+  implicit(y^2 = x, x, 0, 1, y, 0, 1)
+)$
+
+/* Change order: integrate x from y^2 to sqrt(y), then y from 0 to 1 */
+g1: integrate(
+       integrate(f(x, y), x, y^2, sqrt(y)),
+     y, 0, 1)$
+
+print("The value of the given integral by changing the order of integration =", g1)$
+
+
+Example 7: Find the area of the ellipse+= 1 using double integration and plot the region.
+
+a: 4$
+b: 1$
+f: 1$
+fl: integrate(f, y, 0, (b/a) * sqrt(a^2 - x^2))$
+f2: integrate(fl, x, 0, a)$
+area: 4 * f2$
+
+wxdraw2d(
+  grid=true,
+  xaxis=true,
+  yaxis=true,
+  xrange=[-5, 5],
+  yrange=[-2, 2],
+  implicit((x^2)/(a^2) + (y^2)/(b^2) = 1, x, -5, 5, y, -2, 2)
+)$
+
+print("The area of the ellipse =", area, "sq. units")$
+
+
+
+Example 9: Evaluates Sof(x + y + z)dzdydx and find the volume of the unit cube.
+CODE:f(x, y, z) := x + y + z$
+triple_integral: integrate(integrate(integrate(f(x, y, z), z, 0, 1), y, 0, 1), x, 0, 1)$
+print("The value of triple integral =", triple_integral)$
+
+Volume: integrate(integrate(integrate(1, z, 0, 1), y, 0, 1), x, 0, 1)$
+print("The volume of the unit cube is =", Volume)$
+
+Evaluate (1/2) using basic definition and verify the same by direct command.
+/* To evaluate the value of Γ(1/2) using its definition */
+n: 1/2$
+f(x) := exp(-x) * x^(n - 1)$
+f1: integrate(f(x), x, 0, inf)$
+print("The value of Γ(", n, ") using its definition is =", f1)$
+
+/* To evaluate the value of Γ(1/2) by direct command */
+f2: gamma(1/2)$
+print("The value of Γ(", n, ") using direct code is =", f2)$
+
+
+
+
+
+
+
+
+
